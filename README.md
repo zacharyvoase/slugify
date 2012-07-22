@@ -4,7 +4,6 @@
 template filter, packaged as a standalone Python library and command-line
 application.
 
-
 ## Installation
 
     % [sudo] pip install slugify # OR
@@ -13,18 +12,56 @@ application.
 
 ## Usage
 
-### Python
+Works out of the box for Latin-based scripts:
 
-    >>> import slugify
-    >>> slugify.slugify(u"Héllø Wörld")
-    u"hello-world"
+    >>> from slugify import slugify
+    >>> slugify(u"C'est Noël !")
+    u'cest-noel'
+    >>> slugify(u"C'est Noël !", separator="_")
+    u'cest_noel'
 
+It will handle all unicode equivalences if (and only if) the optional
+unidecode library is installed:
+
+    % [sudo] pip install unidecode # OR
+    % [sudo] easy_install unidecode
+
+Then:
+
+    >>> slugify(u"北亰")
+    u'bei-jing'
+
+More about it:
+  - http://en.wikipedia.org/wiki/Unicode_equivalence;
+  - http://pypi.python.org/pypi/Unidecode.
+
+If you do have unidecode installed, but wish not to use it, use the
+unicodedata_slugify fonction:
+
+    >>> slugify(u"Héllø Wörld") # slugify() uses unidecode if it can
+    u'hello-world'
+    >>> unicodedata_slugify(u"Héllø Wörld") # this will more limited
+    u'hell-world'
+
+If you don't use unidecode, the result may vary according to your Python
+implementation or system. unidecode brings a richer equivalence and
+a more consistent cross plateform output:
+
+    >>> unicodedata_slugify(u"Héllø Wörld") # on Ubuntu 12.04 and Python 2.7
+    u'hell-world'
+    >>> unidecode_slugify(u"Héllø Wörld")
+    u'hello-world'
+
+If ne case you wish to keep the non ASCII caracters "as-is", use
+unicode_slugify():
+
+    >>> print unicode_slugify(u"C'est Noël !")
+    cest-noël
 
 ### Command-line
 
     % echo "Héllø Wörld" | slugify
     hello-world
-
 
 ## License
 

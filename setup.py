@@ -4,7 +4,7 @@
 import os
 import re
 
-from distutils.core import setup
+from setuptools import setup
 
 
 rel_file = lambda *args: os.path.join(os.path.dirname(os.path.abspath(__file__)), *args)
@@ -31,4 +31,7 @@ setup(
     py_modules       = ['slugify'],
     package_dir      = {'': 'src'},
     scripts          = ['bin/slugify'],
+    extras_require =   {
+        'UnicodeEquivalence':  ["Unidecode>=0.04.9"],
+    }
 )
