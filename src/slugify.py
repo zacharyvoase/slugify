@@ -35,7 +35,7 @@ u"""
         >>> unicodedata_slugify(u"Héllø Wörld") # this will more limited
         u'hell-world'
 
-    If ne case you wish to keep the non ASCII characters "as-is", use
+    In case you wish to keep the non ASCII characters "as-is", use
     unicode_slugify():
 
     >>> print unicode_slugify(u"C'est Noël !")
