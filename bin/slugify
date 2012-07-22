@@ -12,5 +12,5 @@ if sys.argv[1:]:
 
 line = sys.stdin.readline()
 while line:
-    print slugify.slugify(line.decode('utf-8'))
+    print slugify.slugify(line.decode(sys.stdin.encoding))
     line = sys.stdin.readline()
