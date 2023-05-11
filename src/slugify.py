@@ -3,10 +3,16 @@
 """A generic slugifier utility (currently only for Latin-based scripts)."""
 
 import re
+import sys
 import unicodedata
 
 __version__ = '0.0.1'
 
+# Micro stealing from the six module
+if sys.version_info[0] == 3:
+    text_type = str
+else:
+    text_type = unicode
 
 def slugify(string):
 
@@ -20,10 +26,8 @@ def slugify(string):
 
     """
 
-    return re.sub(r'[-\s]+', '-',
-            unicode(
-                re.sub(r'[^\w\s-]', '',
-                    unicodedata.normalize('NFKD', string)
-                    .encode('ascii', 'ignore'))
-                .strip()
-                .lower()))
+    value = text_type(string)
+    value = unicodedata.normalize('NFKD', value).encode(
+        'ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value).strip().lower()
+    return re.sub(r'[-\s]+', '-', value)
